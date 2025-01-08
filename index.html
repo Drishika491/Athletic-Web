@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="src/assets/favicon.ico" />
+    <!-- <link rel="stylesheet" href="/node_modules/footable/css/footable.standalone.min.css"> -->
+    <title>Singapore Athletics</title>
+
+    <!-- Google tag (gtag.js) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-9GMLE5ESGG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-9GMLE5ESGG');
+    </script> -->
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JZ87F5JCLZ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-JZ87F5JCLZ");
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/firebase-messaging-sw.js").then(
+          (registration) => {
+            console.log(
+              "ServiceWorker registration successful with scope: ",
+              registration.scope
+            );
+          },
+          (err) => {
+            console.log("ServiceWorker registration failed: ", err);
+          }
+        );
+      });
+    }
+  </script>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+  <!-- <script src="/node_modules/footable/js/footable.js"></script> -->
+</html>

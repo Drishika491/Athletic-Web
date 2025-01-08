@@ -1,0 +1,29 @@
+.sponsors-list {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .sponsors-list li {
+    margin: 0 10px; /* Add some space between images */
+  }
+  
+  .responsive-image {
+    display: block; /* Ensure images are displayed as block elements */
+  }
+  /* For mobile view */
+  @media (max-width: 768px) {
+    .sponsors-nav__item.sub-item {
+      flex-basis: 20%; /* 5 items per row */
+      text-align: center;
+    }
+  
+    .sponsors-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+  
