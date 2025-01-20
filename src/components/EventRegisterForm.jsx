@@ -474,26 +474,20 @@ const EventRegisterForm = () => {
             </div>
 
             <button
-  type="button"  // Type ko submit se button mein change kar diya hai
-  className="w-full bg-primary text-white p-2 rounded hover:bg-primary-600"
-  disabled={isLoading}
-  onClick={() => {
-    if (!isLoading) {
-      window.location.href = '/EventRegisterPreview.jsx'; 
-    }
-  }}
->
-  {isLoading ? (
-    <div className="flex items-center justify-center">
-      <div className="animate-spin">
-        <Icon icon="gg:spinner" className="h-[1.5rem] w-auto text-white" />
-      </div>
-    </div>
-  ) : (
-    <p>Register</p>
-  )}
-</button>
-
+              type="submit"
+              className="w-full bg-primary text-white p-2 rounded hover:bg-primary-600"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                  <div className="flex items-center justify-center">
+                      <div className="animate-spin">
+                          <Icon icon="gg:spinner" className="h-[1.5rem] w-auto text-white" />
+                      </div>
+                  </div>
+              ) : (
+                  <p>Register</p>
+              )}
+            </button>
             {registrationError && (
               <p className="text-red-500 mt-4 text-center">{registrationError}</p>
             )}
