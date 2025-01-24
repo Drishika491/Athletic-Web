@@ -1,11 +1,9 @@
 import { Icon } from '@iconify/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
 function ProfileMenu() {
   const isActive = (paths) => paths.some(path => window.location.pathname.includes(path));
   const userType = localStorage.getItem('userType');
-
   return (
     <>
       {/* Mobile View Menu */}
@@ -23,7 +21,7 @@ function ProfileMenu() {
             Profile
           </NavLink>
         </li>
-        {userType === 'Athlete' &&  (
+        {userType === 'Club' && (
           <li className="cursor-pointer text-[0.9rem] p-2 flex items-center">
             <NavLink
               to="/account/manage-athlete"
@@ -77,9 +75,7 @@ function ProfileMenu() {
             Events
           </NavLink>
         </li>
-        
       </div>
-
       {/* Desktop View Menu */}
       <div className="bg-gray-200 w-1/6 p-4 hidden md:flex lg:flex-col md:justify-between">
         <ul className="space-y-2 md:mb-4 list-none md:p-0">
@@ -96,7 +92,6 @@ function ProfileMenu() {
               Profile
             </NavLink>
           </li>
-       
             <li className="cursor-pointer p-2 flex items-center">
               <NavLink
                 to="/account/manage-athlete"
@@ -110,7 +105,6 @@ function ProfileMenu() {
                 Security
               </NavLink>
             </li>
-   
           <li className="cursor-pointer p-2 flex items-center">
             <NavLink
               to="/account/history-payment"
@@ -124,7 +118,6 @@ function ProfileMenu() {
               Transaction
             </NavLink>
           </li>
-          
           <li className="cursor-pointer p-2 flex items-center">
             <NavLink
               to="/account/events"
@@ -138,11 +131,14 @@ function ProfileMenu() {
               Events
             </NavLink>
           </li>
-        
         </ul>
       </div>
     </>
   );
 }
-
 export default ProfileMenu;
+
+
+
+
+

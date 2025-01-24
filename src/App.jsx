@@ -89,7 +89,11 @@ import SafariPushNotification from "./SafariPushNotification";
 import CompetitorsCorner from "./pages/HighPerformance/sub/CompetitorsCorner";
 // import NotificationComponent from "./NotificationComponent";
 import SARecords from "./pages/HighPerformance/sub/SARecords";
-
+import PreviewPage from "./components/PreviewPage";
+import QRCodePage from "./components/QRCodePage";
+import PaymentStatusPage from "./components/PaymentStatusPage";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 function App() {
   useEffect(() => {
     const token = getToken();
@@ -123,6 +127,8 @@ function App() {
     <ScrollToTopOnMount />
       <Routes>
         <Route path="/search" element={<SearchResults />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/register" element={isAuthenticated() ? <Navigate to="/profile" /> : <Register />} />
         <Route path="/login" element={!isAuthenticated() ? (
             <Login />
@@ -144,7 +150,9 @@ function App() {
 
         <Route path="/latest-news" element={<LatestNews/> } />
         <Route path="/latest-news/:articleKey" element={<DetailArticle /> } />
-
+        <Route path="/payment-status" element={<PaymentStatusPage />} />
+        <Route path="/qr-code" element={<QRCodePage/>} />
+        <Route path="/preview" element={<PreviewPage />} />
         <Route path="/chart" element={<LineChart/>}/>
         <Route path="/athlete-list" element={<AthleteList/> }/>
         <Route path="/athlete-profile/:pvid" element={<AthleteProfile /> } />

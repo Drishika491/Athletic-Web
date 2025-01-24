@@ -16,9 +16,9 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     const success = await login(username, password);
-  
+
     if (success) {
       console.log('Login successful.');
       redirectToPreviousPage();
@@ -26,12 +26,15 @@ function LoginForm() {
       console.log('Login failed.');
       setErrorMessage('Login failed. Please try again.');
     }
-  };  
+  };
 
   const redirectToPreviousPage = () => {
-    // window.history.back();
     window.location.href = "/account/profile";
-  }  
+  };
+
+  const redirectToForgotPassword = () => {
+    window.location.href = "/forgot-password";
+  };
 
   return (
     <div>
@@ -78,8 +81,15 @@ function LoginForm() {
               type='submit'
               className='p-2 px-4 bg-secondary mt-5 lg:mt-0 text-white w-full lg:w-fit'
             >
-             Login
+              Login
             </button>
+            <a
+             href="/forgot-password" 
+            style={{ color: "#8D8963", textDecoration: "underline", cursor: "pointer" , alignItems: "center", }} 
+               onClick={redirectToForgotPassword}
+            >
+              Forgot Password
+            </a>
           </div>
         </form>
       </div>

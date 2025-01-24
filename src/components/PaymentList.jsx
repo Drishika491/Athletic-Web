@@ -4,7 +4,6 @@ import { config, configSigned } from '../service/api';
 import moment from 'moment';
 import { getUserPvid } from '../utils/auth';
 import { BASE_URL } from '../service/config';
-
 function PaymentList() {
     const [paymentData, setPaymentData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -15,10 +14,8 @@ function PaymentList() {
     const userPvid = getUserPvid(); // Get the user's Pvid
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
-
     const fetchUserProfile = async () => {
         if (!userPvid) return;
-
         try {
             const result = await axios.get(BASE_URL + `Api/IdentityUser/GetById?Pvid=${userPvid}`, {
                 headers: await config()
@@ -28,13 +25,15 @@ function PaymentList() {
             console.error('Fetch user profile error:', error);
         }
     };
-
     async function fetchData() {
         try {
+            const athletePvId = localStorage.getItem('athletePvid');
+            console.log("athletePvId: ", athletePvId);
             setLoading(true);
-            const response = await axios.get(BASE_URL + 'Api/Event/GetPaymentListPublic', {
+            const response = await axios.get(BASE_URL + `Api/Event/GetRegistrationFormsWithEventDetails?athletePvId=${athletePvId}`, {
                 headers: await configSigned()
             });
+            console.log("response: ", response);
             const dummyData = [
                 {
                     eventDate: '2025-01-01',
@@ -61,22 +60,20 @@ function PaymentList() {
                     amountPaid: '$2500'
                 }
             ];
-            setPaymentData(dummyData);
-            setFilteredData(dummyData);
+            setPaymentData(response.data.data);
+            setFilteredData(response.data.data);
             setLoading(false);
         } catch (error) {
             console.error(error);
             setLoading(false);
         }
     }
-
     async function fetchSelectedDetail(invoiceNo) {
         try {
             let detailEndpoint = BASE_URL + `Api/Event/GetPaymentDetailPublic?invoiceNo=${invoiceNo}`;
             if (userProfile.userType === 'Club') {
                 detailEndpoint = BASE_URL + `Api/Event/GetPaymentDetailClub?invoiceNo=${invoiceNo}`;
             }
-
             const response = await axios.get(detailEndpoint, {
                 headers: await configSigned()
             });
@@ -86,17 +83,14 @@ function PaymentList() {
             console.error(error);
         }
     }
-
     useEffect(() => {
         fetchData();
         fetchUserProfile();
     }, [userPvid]);
-
     function handleBackButtonClick() {
         setShowPaymentList(true);
         setPaymentDetail([]); // Clear payment detail
     }
-
     function handleSearch(e) {
         const query = e.target.value.toLowerCase();
         setSearchQuery(query);
@@ -106,7 +100,6 @@ function PaymentList() {
         );
         setFilteredData(filtered);
     }
-
     return (
         <div>
             {showPaymentList ? (
@@ -121,7 +114,7 @@ function PaymentList() {
                                 onChange={handleSearch}
                             />
                             <span className="absolute inset-y-0 right-2 flex items-center text-gray-400">
-                                🔍
+                                :mag:
                             </span>
                         </div>
                     </div>
@@ -134,18 +127,21 @@ function PaymentList() {
                                 <th className="px-6 py-3 text-gray-600 font-medium bg-gray-100 text-sm">Participants</th>
                                 <th className="px-6 py-3 text-gray-600 font-medium bg-gray-100 text-sm">Registered Date</th>
                                 <th className="px-6 py-3 text-gray-600 font-medium bg-gray-100 text-sm">Amount Paid</th>
+                                <th className="px-6 py-3 text-gray-600 font-medium bg-gray-100 text-sm">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredData.length > 0 ? (
                                 filteredData.map((payment, index) => (
                                     <tr key={index} className="border-t hover:bg-gray-50">
-                                        <td className="px-6 py-3 text-gray-700 text-sm">{moment(payment.eventDate).format('DD MMM YYYY')}</td>
-                                        <td className="px-6 py-3 text-gray-700 text-sm">{payment.eventName}</td>
-                                        <td className="px-6 py-3 text-gray-700 text-sm">{payment.venue}</td>
-                                        <td className="px-6 py-3 text-gray-700 text-sm">{payment.participants}</td>
-                                        <td className="px-6 py-3 text-gray-700 text-sm">{moment(payment.registeredDate).format('DD MMM YYYY')}</td>
-                                        <td className="px-6 py-3 text-gray-700 text-sm">{payment.amountPaid}</td>
+                                        <td className="px-6 py-3 text-gray-700 text-sm">{moment(payment.originalData.eventDetails.date).format('DD MMM YYYY')}</td>
+                                        <td className="px-6 py-3 text-gray-700 text-sm">{payment.originalData.eventDetails.name}</td>
+                                        <td className="px-6 py-3 text-gray-700 text-sm">{payment.originalData.eventDetails.venue}</td>
+                                        <td className="px-6 py-3 text-gray-700 text-sm">1</td>
+                                        <td className="px-6 py-3 text-gray-700 text-sm">{moment(payment.
+                                            originalData.eventDetails.date).format('DD MMM YYYY')}</td>
+                                        <td className="px-6 py-3 text-gray-700 text-sm">${payment.hitPayResponse.amount}</td>
+                                        <td className="px-6 py-3 text-gray-700 text-sm">{payment.hitPayResponse.status}</td>
                                     </tr>
                                 ))
                             ) : (
@@ -168,5 +164,4 @@ function PaymentList() {
         </div>
     );
 }
-
 export default PaymentList;

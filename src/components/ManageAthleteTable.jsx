@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { BASE_URL } from '../service/config';
 
 function ManageAthleteTable() {
   const [activeTab, setActiveTab] = useState("Security");
@@ -45,7 +46,7 @@ function ManageAthleteTable() {
     try {
       // Make API request to update the password
       const response = await axios.post(
-        "https://localhost:44328/api/IdentityUser/UpdatePassword", // URL for password update
+        BASE_URL + "api/IdentityUser/UpdatePassword", // URL for password update
         requestBody,
         {
           headers: {
@@ -71,7 +72,9 @@ setError("An error occurred. Please try again.");
 setSuccess(""); // Clear any previous success messages
 }
 };
-
+const redirectToForgotPassword = () => {
+  window.location.href = "/forgot-password";
+};
 return (
 <div style={styles.container}>
 <div style={styles.contentWrapper}>
@@ -118,8 +121,15 @@ return (
       style={styles.input}
       placeholder="Confirm your new password"
     />
-    <button style={styles.resetButton} onClick={handleSubmit}>Reset password</button>
 
+    <button style={styles.resetButton} onClick={handleSubmit}>Reset password</button>
+    <a
+             href="/forgot-password" 
+            style={{ color: "#8D8963", textDecoration: "underline", cursor: "pointer" , alignItems: "center", }} 
+               onClick={redirectToForgotPassword}
+            >
+              Forgot Password
+            </a>
     {/* Display error or success message */}
     {error && <p style={styles.errorText}>{error}</p>}
     {success && <p style={styles.successText}>{success}</p>}

@@ -97,7 +97,7 @@ function ProfileAccount() {
   try {
     // Make a POST request to upload the profile photo
     const response = await axios.post(
-      `https://localhost:44328/Api/AthleteProfile/EditProfileById/${detailProfile.pvid}`, 
+      BASE_URL + `Api/AthleteProfile/EditProfileById/${detailProfile.pvid}`, 
       formData,
       {
         headers: {

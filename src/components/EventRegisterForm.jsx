@@ -5,8 +5,12 @@ import { Link, useParams } from 'react-router-dom';
 import { isAuthenticated, login } from "../utils/auth";
 import { Icon } from "@iconify/react";
 import { BASE_URL } from "../service/config";
+import { useNavigate } from 'react-router-dom';
+
 const EventRegisterForm = () => {
   const [eventFee, setEventFee] = useState([]);
+  const navigate = useNavigate();
+
   const [eventData, setEventData] = useState([]);
   const [listClub, setListClub] = useState([]);
   const [listAgeGroup, setListAgeGroup] = useState([]);
@@ -221,10 +225,14 @@ const EventRegisterForm = () => {
 
       if (invoiceNumber === null) {
         setPaymentMessage("Registration has been successful. Please contact your club manager to complete payment.");
-      } else {
+      } 
         // Call the function to generate QR code using the obtained invoiceNumber
-        await generateQRCode(invoiceNumber);
-      }
+        else {
+          console.log(' response.data', response.data)
+          // Navigate to the preview page with response data
+          navigate('/preview', { state: { responseData: response.data } });
+        }
+      
 
       // Add any necessary logic or actions after successful data submission
     } catch (error) {
@@ -244,30 +252,30 @@ const EventRegisterForm = () => {
     
   };
 
-  const generateQRCode = async (invoiceNumber) => {
-    try {
-      const qrCodeResponse = await axios.post(
-        BASE_URL+"Api/Shop/GeneratePaymentQR",
-        {
-          InvoiceNo: invoiceNumber, // Replace with the actual property name expected by the API
-        },
-        {
-          responseType: 'arraybuffer',
-          headers: await configPOST(), // Make sure you have the appropriate headers for the new API call
-        }
-      );
+  // const generateQRCode = async (invoiceNumber) => {
+  //   try {
+  //     const qrCodeResponse = await axios.post(
+  //       BASE_URL+"Api/Shop/GeneratePaymentQR",
+  //       {
+  //         InvoiceNo: invoiceNumber, // Replace with the actual property name expected by the API
+  //       },
+  //       {
+  //         responseType: 'arraybuffer',
+  //         headers: await configPOST(), // Make sure you have the appropriate headers for the new API call
+  //       }
+  //     );
   
-      const qrCodeBlob = new Blob([qrCodeResponse.data], { type: 'image/png' });
-      const qrCodeImageUrl = URL.createObjectURL(qrCodeBlob);
-      setQrCodeUrl(qrCodeImageUrl);
-      console.log("QR Code URL:", qrCodeImageUrl);
+  //     const qrCodeBlob = new Blob([qrCodeResponse.data], { type: 'image/png' });
+  //     const qrCodeImageUrl = URL.createObjectURL(qrCodeBlob);
+  //     setQrCodeUrl(qrCodeImageUrl);
+  //     console.log("QR Code URL:", qrCodeImageUrl);
   
-      // Perform any necessary actions with the generated QR code URL
-    } catch (error) {
-      console.error("Error generating QR code:", error);
-      // Handle the error as needed
-    }
-  };  
+  //     // Perform any necessary actions with the generated QR code URL
+  //   } catch (error) {
+  //     console.error("Error generating QR code:", error);
+  //     // Handle the error as needed
+  //   }
+  // };  
 
   return (
     <div>
@@ -485,7 +493,7 @@ const EventRegisterForm = () => {
                       </div>
                   </div>
               ) : (
-                  <p>Register</p>
+                  <p>Next</p>
               )}
             </button>
             {registrationError && (
