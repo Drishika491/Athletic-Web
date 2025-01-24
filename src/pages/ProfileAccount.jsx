@@ -15,7 +15,8 @@ function ProfileAccount() {
   const [detailProfile, setDetailProfile] = useState({}); // Stores detail profile data
   const [profilePhotoUrl, setProfilePhotoUrl] = useState(""); // Stores the profile photo URL
   const [pvid, setPvid] = useState(null); // Stores the profile photo URL
-
+  const usertype = localStorage.getItem("userType");
+console.log('usertype', usertype)
   const userPvid = getUserPvid(); // Get the user's Pvid
 
   // Fetch user profile details
@@ -29,6 +30,7 @@ function ProfileAccount() {
           headers: await config(),
         }
       );
+      console.log("Identity USER data:", result.data);
       setUserProfile(result.data.data); // Store fetched user profile
     } catch (error) {
       console.error("Fetch user profile error:", error);
@@ -62,15 +64,30 @@ function ProfileAccount() {
 
     console.log('Fetch', id);
     try {
-      const response = await axios.get(
+      let response;
+     
+      if(usertype == "Athlete"){
+       response = await axios.get(
         `${BASE_URL}Api/AthleteProfile/GetProfilePhotoById/${id}`,
         {
           headers: await config(),
         }
       );
+      setProfilePhotoUrl(response.data.data.profilePhotoUrl);
+    } else if(usertype == "Member") {
+      console.log('Member', id)
+      response = await axios.get(
+       BASE_URL + `Api/IdentityUser/GetAvatarById/${id}`,
+        {
+          headers: await config(),
+        }
+      );
+      console.log('memnbers:', response)
+      setProfilePhotoUrl(response.data.data.avatarUrl)
+    }
       console.log('Fetch profile photo', response.data.data.profilePhotoUrl);
 
-      setProfilePhotoUrl(response.data.data.profilePhotoUrl); // Set the photo URL
+      ; // Set the photo URL
     } catch (error) {
       console.error("Error fetching profile photo:", error);
     }
@@ -90,13 +107,16 @@ function ProfileAccount() {
  // Handle profile photo upload and update
  const handleUpload = async () => {
   if (!selectedFile) return;
-
+console.log('functii upload',usertype)
   const formData = new FormData();
   formData.append("file", selectedFile); // Attach the selected file to FormData
-
-  try {
+  console.log('formData',selectedFile)
+  const id = localStorage.getItem('referencePvid');
+  try { 
+    var response 
+    if(usertype == "Athlete"){
     // Make a POST request to upload the profile photo
-    const response = await axios.post(
+     response = await axios.post(
       BASE_URL + `Api/AthleteProfile/EditProfileById/${detailProfile.pvid}`, 
       formData,
       {
@@ -106,7 +126,19 @@ function ProfileAccount() {
         },
       }
     );
-
+  } else if(usertype == "Member") {
+    // console.log('a[pi calling',detailProfile.pvid, formData)
+    response = await axios.put(
+      BASE_URL + `Api/IdentityUser/UpdateAvatarById/${id}`, 
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data', // This tells the server we are sending files
+          ...await config(), // Include any necessary headers (e.g., authorization)
+        },
+      }
+    );
+  }
     if (response.data.isSuccess) {
       // Step 1: Fetch the updated user profile after successful upload
       await fetchUserProfile(); // Refresh the user profile

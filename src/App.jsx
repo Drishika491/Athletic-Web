@@ -36,7 +36,7 @@ import DTEHomeofAthletics from "./pages/HighPerformance/sub/DTEHomeofAthletics";
 import Applyforsanction from "./pages/HighPerformance/sub/Applyforsanction";
 import SAOCTC from "./pages/HighPerformance/sub/SAOCTC";
 import IncomeInsurance from "./pages/HighPerformance/sub/IncomeInsurance";
-
+import ManageAthleteList from "./components/ManageAthleteList";
 import SpexCarding from "./pages/HighPerformance/sub/SpexCarding";
 import NationalRecordsandStatistics from "./pages/HighPerformance/sub/NationalRecordsandStatistics";
 import RegionalTrainingCentre from "./pages/HighPerformance/sub/RegionalTrainingCentre";
@@ -94,6 +94,7 @@ import QRCodePage from "./components/QRCodePage";
 import PaymentStatusPage from "./components/PaymentStatusPage";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import ManageAthProfile from "./components/ManageAthProfile";
 function App() {
   useEffect(() => {
     const token = getToken();
@@ -145,6 +146,7 @@ function App() {
         <Route path="/account/events" element={isAuthenticated() ? <EventProfile /> : <Navigate to="/login" />} />
         <Route path="/account/manage-athlete" element={isAuthenticated() ? <ManageAthlete /> : <Navigate to="/login" />} />
         <Route path="/account/events/submit-participant/:pvid" element={isAuthenticated() ? <ManageParticipant /> : <Navigate to="/login" />} />
+        <Route path="/account/manage-athlete-list" element={isAuthenticated() ? <ManageAthProfile /> : <Navigate to="/login" />} />
         <Route path="/payment" element={isAuthenticated() ? <Payment /> : <Navigate to="/login" />} />
         <Route path="/event-register" element={isAuthenticated() ? <Navigate to="/events-&-competitions/calendar" /> : <Navigate to="/login" />} />
 

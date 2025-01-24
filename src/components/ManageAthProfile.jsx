@@ -5,8 +5,9 @@ import { getUserPvid } from '../utils/auth';
 import axios from 'axios';
 import { config } from '../service/api';
 import ManageAthleteTable from '../components/ManageAthleteTable';
+import ManageAthleteList from './ManageAthleteList';
 
-function ManageAthlete() {
+function ManageAthProfile() {
   const userType = localStorage.getItem('userType');
   return (
     <div>
@@ -20,7 +21,7 @@ function ManageAthlete() {
         <div className='lg:flex md:flex'>
             <ProfileMenu />
             <div className='flex-1 p-4 lg:p-8 bg-gray-100'>
-                <ManageAthleteTable />
+                <ManageAthleteList />
                 
             </div>
         </div>
@@ -28,4 +29,4 @@ function ManageAthlete() {
   )
 }
 
-export default ManageAthlete
+export default ManageAthProfile
