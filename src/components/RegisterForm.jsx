@@ -308,6 +308,98 @@ function RegisterForm() {
                   required
                 />
               </div>
+              
+              <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
+                <div className='lg:w-[150px]'>Team Code </div>
+                <input
+                  type='text'
+                  id='iCLast4Digit'
+                  value={iCLast4Digit}
+                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
+                  placeholder='Team Code'
+                  required
+                />
+              </div>
+
+              <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
+                <div className='lg:w-[150px]'>Team Name </div>
+                <input
+                  type='text'
+                  id='iCLast4Digit'
+                  value={iCLast4Digit}
+                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
+                  placeholder='Team Name '
+                  required
+                />
+              </div>
+
+              <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
+                <div className='lg:w-[150px]'>Events </div>
+                <input
+                  type='text'
+                  id='iCLast4Digit'
+                  value={iCLast4Digit}
+                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
+                  placeholder='Events'
+                  required
+                />
+              </div>
+
+              <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
+                <div className='lg:w-[150px]'>Seed Time</div>
+                <input
+                  type='text'
+                  id='iCLast4Digit'
+                  value={iCLast4Digit}
+                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
+                  placeholder='Seed Time'
+                  required
+                />
+              </div>
+
+              <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
+                <div className='lg:w-[150px]'>Metric Measurement</div>
+                <input
+                  type='text'
+                  id='iCLast4Digit'
+                  value={iCLast4Digit}
+                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
+                  placeholder='Metric Measurement'
+                  required
+                />
+              </div>
+
+              <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
+                <div className='lg:w-[150px]'>Division</div>
+                <input
+                  type='text'
+                  id='iCLast4Digit'
+                  value={iCLast4Digit}
+                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
+                  placeholder='Division'
+                  required
+                />
+              </div>
+
+              <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
+                <div className='lg:w-[150px]'>Unique ID </div>
+                <input
+                  type='text'
+                  id='iCLast4Digit'
+                  value={iCLast4Digit}
+                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
+                  placeholder='Unique ID'
+                  required
+                />
+              </div>
+              
             </>
           )}
 
