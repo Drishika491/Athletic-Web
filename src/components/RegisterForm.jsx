@@ -318,7 +318,7 @@ function RegisterForm() {
                   onChange={(e) => setICLast4Digit(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Team Code'
-                  required
+                  // required
                 />
               </div>
 
@@ -331,21 +331,65 @@ function RegisterForm() {
                   onChange={(e) => setICLast4Digit(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Team Name '
-                  required
+                  // required
                 />
               </div>
 
               <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
-                <div className='lg:w-[150px]'>Events </div>
-                <input
-                  type='text'
-                  id='iCLast4Digit'
-                  value={iCLast4Digit}
-                  onChange={(e) => setICLast4Digit(e.target.value)}
-                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
-                  placeholder='Events'
-                  required
-                />
+              <div className='lg:w-[150px]'>Events</div>
+                <div className='p-2 text-primary bg-gray-100 px-2 cursor-pointer'>
+                  <select
+                    type='text'
+                    id='gender'
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className='w-full lg:w-[315px] outline-none cursor-pointer text-black bg-gray-100'
+                    placeholder='Division'
+                    // required
+                  >
+                    <option value=''>Select Events</option>
+                    <option value='80m'>80m</option>
+                    <option value='100m'>100m</option>
+                    <option value='200m'>200</option>
+                    <option value='400m'>400</option>
+                    <option value='800m'>800m</option>
+                    <option value='1500m'>1500m</option>
+                    <option value='3000m'>3000m</option>
+                    <option value='5000m'>5000</option>
+                    <option value='10000m'>10000m</option>
+                    <option value='80m hurdles'>80m hurdles</option>
+                    <option value='100m hurdles'>100m hurdles</option>
+                    <option value='110m hurdles'>110m hurdles</option>
+                    <option value='200m hurdles'>200m hurdles</option>
+                    <option value='400m hurdles'>400m hurdles</option>
+                    <option value='32000m steeplechase'>2000m steeplechase</option>
+                    <option value='3000m steeplechase'>3000m steeplechase</option>
+                    <option value='1500m racewak'>1500m racewak</option>
+                    <option value='3000m racewalk'>3000m racewalk</option>
+                    <option value='5000m racewalk'>5000m racewalk</option>
+                    <option value='10000m racewalk'>10000m racewalk</option>
+                    <option value='long jump'>long jump</option>
+                    <option value='triple jump'>triple jump</option>
+                    <option value='high jump'>high jump</option>
+                    <option value='pole vault'>pole vault</option>
+                    <option value='shot put 4kg'>shot put 4kg</option>
+                    <option value='shot put 5kg'>shot put 5kg</option>
+                    <option value='shot put 6kg'>shot put 6kg</option>
+                    <option value='shot put 7.26kg'>shot put 7.26kg</option>
+                    <option value='Discus 1kg'>Discus 1kg</option>
+                    <option value='Discus 1.5kg'>Discus 1.5kg</option>
+                    <option value='Discus 1.75kg'>Discus 1.75kg</option>
+                    <option value='Discus 2kg'>Discus 2kg</option>
+                    <option value='Javelin 500g'>Javelin 500g</option>
+                    <option value='Javelin 600g'>Javelin 600g</option>
+                    <option value='Javelin 700g'>Javelin 700g</option>
+                    <option value='Javelin 800g'>Javelin 800g</option>
+                    <option value='Hammer 4kg'>Hammer 4kg</option>
+                    <option value='Hammer 5kg'>Hammer 5kg</option>
+                    <option value='Hammer 6kg'>Hammer 6kg</option>
+                    <option value='Hammer 7.26kg'>Hammer 7.26kg</option>
+                  </select>
+                </div>
               </div>
 
               <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
@@ -357,7 +401,7 @@ function RegisterForm() {
                   onChange={(e) => setICLast4Digit(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Seed Time'
-                  required
+                  // required
                 />
               </div>
 
@@ -370,21 +414,33 @@ function RegisterForm() {
                   onChange={(e) => setICLast4Digit(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Metric Measurement'
-                  required
+                  // required
                 />
               </div>
 
               <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
-                <div className='lg:w-[150px]'>Division</div>
-                <input
-                  type='text'
-                  id='iCLast4Digit'
-                  value={iCLast4Digit}
-                  onChange={(e) => setICLast4Digit(e.target.value)}
-                  className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
-                  placeholder='Division'
-                  required
-                />
+              <div className='lg:w-[150px]'>Division</div>
+                <div className='p-2 text-primary bg-gray-100 px-2 cursor-pointer'>
+                  <select
+                    type='text'
+                    id='gender'
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className='w-full lg:w-[315px] outline-none cursor-pointer text-black bg-gray-100'
+                    placeholder='Division'
+                    // required
+                  >
+                    <option value=''>Select Division</option>
+                    <option value='U7'>U7</option>
+                    <option value='U9'>U9</option>
+                    <option value='U11'>U11</option>
+                    <option value='U12'>U12</option>
+                    <option value='U13'>U13</option>
+                    <option value='U15'>U15</option>
+                    <option value='U18'>U18</option>
+                    <option value='U20'>U20</option>
+                  </select>
+                </div>
               </div>
 
               <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
@@ -396,8 +452,38 @@ function RegisterForm() {
                   onChange={(e) => setICLast4Digit(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Unique ID'
-                  required
+                  // required
                 />
+              </div>
+
+              <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
+              <div className='lg:w-[150px]'>Masters Age Group</div>
+                <div className='p-2 text-primary bg-gray-100 px-2 cursor-pointer'>
+                  <select
+                    type='text'
+                    id='gender'
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className='w-full lg:w-[315px] outline-none cursor-pointer text-black bg-gray-100'
+                    placeholder='Masters Age Group'
+                    // required
+                  >
+                    <option value=''>Select Masters Age Group</option>
+                    <option value='35-39'>35-39</option>
+                    <option value='40-44'>40-44</option>
+                    <option value='45-49'>45-49</option>
+                    <option value='50-54'>50-54</option>
+                    <option value='55-59'>55-59</option>
+                    <option value='60-64'>60-64</option>
+                    <option value='65-69'>65-69</option>
+                    <option value='70-74'>70-74</option>
+                    <option value='75-79'>75-79</option>
+                    <option value='80-84'>80-84</option>
+                    <option value='85-89'>85-89</option>
+                    <option value='90 & above'>90 & above</option>
+
+                  </select>
+                </div>
               </div>
               
             </>

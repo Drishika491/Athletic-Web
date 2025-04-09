@@ -13,6 +13,7 @@ function CalendarTable() {
   console.log('events>>>>',events);
   
   const [dateFrom, setDateFrom] = useState('');
+  const [imageCoverUrl, setImageCoverUrl] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [eventType, setEventType] = useState('');
   const [eventHeldStatus, setEventHeldStatus] = useState('');
@@ -56,10 +57,12 @@ function CalendarTable() {
             EventHeldStatusPvid: eventHeldStatus,
             Page: currentPage,
             PageRow: itemsPerPage,
-            ShowComplitedEvent: false
+            ShowComplitedEvent: false,
+            imageCoverUrl: imageCoverUrl,
           },
           headers: await config()
         });
+        
 
         // debugger;
 
@@ -75,7 +78,7 @@ function CalendarTable() {
     };
 
     fetchData();
-  }, [dateFrom, dateTo, eventType, eventHeldStatus, searchKey, currentPage]);
+  }, [dateFrom, dateTo, eventType, eventHeldStatus, searchKey, currentPage , imageCoverUrl]);
 
   const handleDateFromChange = (selectedDate) => {
     setDateFrom(selectedDate);
@@ -93,6 +96,7 @@ function CalendarTable() {
     setEventHeldStatus('');
     setSearchKey('');
     setCurrentPage(1);
+    setImageCoverUrl('');
   };
 
   useEffect(() => {
@@ -232,7 +236,7 @@ function CalendarTable() {
               <div className="-mx-4 sm:-mx-8 px-4 md:px-0 lg:px-8 py-4 overflow-x-auto">
                 <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
                   <table className="min-w-full leading-normal">
-                    <thead>
+                    {/* <thead>
                       <tr>
                         <th className="px-5 py-3 border-b-2 border-r-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Date</th>
                         <th className="px-5 py-3 border-b-2 border-r-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Event</th>
@@ -240,13 +244,13 @@ function CalendarTable() {
                         <th className="px-5 py-3 border-b-2 border-r-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Event Status</th>
                         <th className="px-5 py-3 border-b-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Venue</th>
                       </tr>
-                    </thead>
+                    </thead> */}
                     <tbody>
   {events.length > 0 ? (
     events.map((listItem) => (
       <tr key={listItem.pvid}>
-        {console.log('listItem.name', listItem.eventHeldStatus.name)}
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        {console.log('listItem.name', listItem.eventHeldStatus.name, listItem.imageCoverUrl)}
+        {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
           <div className="flex">
             <div className="">
               {moment(listItem.date).format('MMM YYYY') === moment(listItem.endDate).format('MMM YYYY') ? (
@@ -316,7 +320,136 @@ function CalendarTable() {
           ) : (
             <p className="text-gray-900 whitespace-no-wrap">Not Available</p>
           )}
-        </td>
+        </td> */}
+        <div className="border border-gray-300 rounded-md p-4 bg-white shadow-sm mb-4">
+          <div className="flex flex-col md:flex-row items-start gap-4">
+    
+            {/* Event Image / Logo */}
+            <div className="md:w-1/5 w-full h-full">
+            <Link to={`/events-&-competitions/calendar/${listItem.articleKey}`}>
+            <img
+            src={
+            listItem.imageCoverUrl
+            ? BASE_URL_ + listItem.imageCoverUrl
+            : BASE_URL_ + "/api/Image/X-12CB-6957a13d5fd349dcb71bccc1bed786b9.png"
+            }
+            alt="Event"
+            className="w-full h-[200px] object-cover rounded-md"
+            onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/images/event-placeholder.png";
+            }}
+            />
+
+        </Link>
+    </div>
+
+    {/* Center Content */}
+    <div className="flex-1">
+      {/* Date Range */}
+      <div className="flex gap-1 mb-3">
+  {/* Start Date */}
+  <div className="flex items-center gap-2">
+  {/* Start Date Calendar */}
+  <div className="w-14 border rounded-md overflow-hidden shadow-sm">
+    <div className="bg-red-600 text-white text-xs font-semibold text-center py-1"> 
+      {moment(listItem.date).format("MMM")}
+    </div>
+    <div className="text-center text-black font-bold text-lg py-1">
+      {moment(listItem.date).format("DD")}
+    </div>
+  </div>
+
+  {/* Line */}
+  <div className="h-px bg-gray-400 flex-1"></div>
+
+  {/* End Date Calendar */}
+  <div className="w-14 border rounded-md overflow-hidden shadow-sm">
+    <div className="bg-red-600 text-white text-xs font-semibold text-center py-1"> 
+      {moment(listItem.endDate).format("MMM")}
+    </div>
+    <div className="text-center text-black font-bold text-lg py-1">
+      {moment(listItem.endDate).format("DD")}
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+      {/* Event Name */}
+      <h3 className="text-lg font-bold text-gray-800">
+        {listItem.articleKey ? (
+          <Link to={`/events-&-competitions/calendar/${listItem.articleKey}`}>
+            {listItem.name || 'Not Available'}
+          </Link>
+        ) : (
+          listItem.name || 'Not Available'
+        )}
+      </h3>
+
+      {/* Venue */}
+      <p className="text-sm text-gray-600 mt-1">
+        📍 {listItem.venue || 'Not Available'}
+      </p>
+
+      {/* Description */}
+      <p className="text-sm text-gray-700 mt-2">
+        This is a ratified competition. In order to represent Team Singapore, athletes have to be a nominated part of the SA OAC/TDC...
+      </p>
+    </div>
+
+    {/* Right Badges and Actions */}
+    <div className="flex flex-col items-end justify-between gap-2">
+      {/* Status Badge */}
+      <span className={`px-3 py-1 text-xs rounded-full font-semibold ${
+        listItem.eventHeldStatus?.name === 'Coming Soon' ? 'bg-gray-200 text-gray-700' :
+        listItem.eventHeldStatus?.name === 'Register' ? 'bg-blue-100 text-blue-700' :
+        listItem.eventHeldStatus?.name === 'Result' ? 'bg-green-100 text-green-700' :
+        listItem.eventHeldStatus?.name === 'Cancelled' ? 'bg-red-100 text-red-700' :
+        'bg-yellow-100 text-yellow-700'
+      }`}>
+        {listItem.eventHeldStatus?.name || 'N/A'}
+      </span>
+
+      {/* Category */}
+      <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+        {listItem.eventType?.name || 'Event'}
+      </span>
+
+      {/* Action Button */}
+      {listItem.eventHeldStatus?.name === 'Result' && listItem.resultFileUrl ? (
+        // <a
+        //   href={`${BASE_URL_}${listItem.resultFileUrl}`}
+        //   target="_blank"
+        //   rel="noopener noreferrer"
+        //   className="text-sm border border-primary px-4 py-1 rounded hover:bg-primary hover:text-white"
+        // >
+        //   View Result
+        // </a>
+        <Link
+  to={`/events-&-competitions/calendar/${listItem.articleKey}`}
+  className="text-sm border border-primary px-4 py-1 rounded hover:bg-primary hover:text-white"
+>
+  More Details
+</Link>
+
+      ) : listItem.eventHeldStatus?.name === 'Register' ? (
+        <Link
+          to={userProfile?.userType === 'Club' ? `/account/events` : `/event-register/${listItem.pvid}`}
+          className="text-sm border border-primary px-4 py-1 rounded hover:bg-primary hover:text-white"
+        >
+          Register
+        </Link>
+      ) : (
+        <button className="text-sm border border-primary px-4 py-1 rounded hover:bg-primary hover:text-white">
+          More Details
+        </button>
+      )}
+    </div>
+  </div>
+</div>
+
       </tr>
     ))
   ) : (
