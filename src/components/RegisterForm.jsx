@@ -13,6 +13,14 @@ function RegisterForm() {
   const [birthDate, setBirthDate] = useState(null);
   const [country, setCountry] = useState(null);
   const [gender, setGender] = useState(null);
+  const [TeamCode, setTeamCode] = useState('');
+  const [TeamName, setTeamName] = useState('');
+  const [SeedTime, setSeedTime] = useState('');
+  const [MetricsMeasurement, setMetricsMeasurement] = useState('');
+  const [Division, setDivision] = useState('');
+  const [uniqueID, setuniqueID] = useState('');
+  const [Event, setEvent] = useState('');
+  const [MastersAgeGroup, setMastersAgeGroup] = useState('');
   const [club, setClub] = useState(null);
   const [iCLast4Digit, setICLast4Digit] = useState('');
   const [phone, setPhone] = useState('');
@@ -67,6 +75,14 @@ function RegisterForm() {
       NickName: nickname,
       FirstName: firstName,
       LastName: lastName,
+      TeamCode: TeamCode,
+      TeamName: TeamName,
+      SeedTime: SeedTime,
+      MetricsMeasurement: MetricsMeasurement,
+      Division: Division,
+      uniqueID: uniqueID,
+      Event: Event,
+      MastersAgeGroup: MastersAgeGroup,
     };
 
     const headers = await configPOST();
@@ -98,6 +114,14 @@ function RegisterForm() {
         setNickname('');
         setFirstName('');
         setLastName('');
+        setTeamCode('');
+        setTeamName('');
+        setSeedTime(null);
+        setMetricsMeasurement('');
+        setDivision(null);
+        setuniqueID('');
+        setEvent(null);
+        setMastersAgeGroup(null);
 
         setTimeout(() => {
           setSuccessMessage('');
@@ -313,12 +337,12 @@ function RegisterForm() {
                 <div className='lg:w-[150px]'>Team Code </div>
                 <input
                   type='text'
-                  id='iCLast4Digit'
-                  value={iCLast4Digit}
-                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  id='teamCode'
+                  value={TeamCode}
+                  onChange={(e) => setTeamCode(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Team Code'
-                  // required
+                  required
                 />
               </div>
 
@@ -326,9 +350,9 @@ function RegisterForm() {
                 <div className='lg:w-[150px]'>Team Name </div>
                 <input
                   type='text'
-                  id='iCLast4Digit'
-                  value={iCLast4Digit}
-                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  id='teamName'
+                  value={TeamName}
+                  onChange={(e) => setTeamName(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Team Name '
                   // required
@@ -340,12 +364,12 @@ function RegisterForm() {
                 <div className='p-2 text-primary bg-gray-100 px-2 cursor-pointer'>
                   <select
                     type='text'
-                    id='gender'
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                    id='event'
+                    value={Event}
+                    onChange={(e) => setEvent(e.target.value)}
                     className='w-full lg:w-[315px] outline-none cursor-pointer text-black bg-gray-100'
-                    placeholder='Division'
-                    // required
+                    placeholder='Events'
+                    required
                   >
                     <option value=''>Select Events</option>
                     <option value='80m'>80m</option>
@@ -395,13 +419,13 @@ function RegisterForm() {
               <div className='flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:items-center lg:space-x-5'>
                 <div className='lg:w-[150px]'>Seed Time</div>
                 <input
-                  type='text'
-                  id='iCLast4Digit'
-                  value={iCLast4Digit}
-                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  type='date'
+                  id='seedTime'
+                  value={SeedTime}
+                  onChange={(e) => setSeedTime(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Seed Time'
-                  // required
+                  required
                 />
               </div>
 
@@ -409,12 +433,12 @@ function RegisterForm() {
                 <div className='lg:w-[150px]'>Metric Measurement</div>
                 <input
                   type='text'
-                  id='iCLast4Digit'
-                  value={iCLast4Digit}
-                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  id='MetricsMeasurement'
+                  value={MetricsMeasurement}
+                  onChange={(e) => setMetricsMeasurement(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Metric Measurement'
-                  // required
+                  required
                 />
               </div>
 
@@ -423,12 +447,12 @@ function RegisterForm() {
                 <div className='p-2 text-primary bg-gray-100 px-2 cursor-pointer'>
                   <select
                     type='text'
-                    id='gender'
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                    id='Division'
+                    value={Division}
+                    onChange={(e) => setDivision(e.target.value)}
                     className='w-full lg:w-[315px] outline-none cursor-pointer text-black bg-gray-100'
                     placeholder='Division'
-                    // required
+                    required
                   >
                     <option value=''>Select Division</option>
                     <option value='U7'>U7</option>
@@ -447,12 +471,12 @@ function RegisterForm() {
                 <div className='lg:w-[150px]'>Unique ID </div>
                 <input
                   type='text'
-                  id='iCLast4Digit'
-                  value={iCLast4Digit}
-                  onChange={(e) => setICLast4Digit(e.target.value)}
+                  id='uniqueID'
+                  value={uniqueID}
+                  onChange={(e) => setuniqueID(e.target.value)}
                   className='p-2 w-full lg:w-[330px] outline-none text-black bg-gray-100'
                   placeholder='Unique ID'
-                  // required
+                  required
                 />
               </div>
 
@@ -461,12 +485,12 @@ function RegisterForm() {
                 <div className='p-2 text-primary bg-gray-100 px-2 cursor-pointer'>
                   <select
                     type='text'
-                    id='gender'
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                    id='mastersAgeGroup'
+                    value={MastersAgeGroup}
+                    onChange={(e) => setMastersAgeGroup(e.target.value)}
                     className='w-full lg:w-[315px] outline-none cursor-pointer text-black bg-gray-100'
                     placeholder='Masters Age Group'
-                    // required
+                    required
                   >
                     <option value=''>Select Masters Age Group</option>
                     <option value='35-39'>35-39</option>
