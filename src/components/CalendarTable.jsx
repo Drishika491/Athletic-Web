@@ -194,6 +194,11 @@ function CalendarTable() {
                       placeholderText="Select Month & Year"
                       className="block bg-gray-100 rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
+                     {selectedMonth && (
+                    <div className="text-red-500 text-2xl font-semibold mt-2">
+                     {moment(selectedMonth).format('MMMM YYYY')}
+                     </div>
+                    )}  
 
                 </div>
                 
@@ -240,9 +245,6 @@ function CalendarTable() {
                     <option value="1">Club/Local Event</option>
                     <option value="2">Overseas Event</option>
                     <option value="3">SA Event</option>
-                    
-                   
-
                   </select>
                 </div>
               </div>
@@ -271,6 +273,7 @@ function CalendarTable() {
             </div>
           </div>
         </div>
+        
         <div className="flex flex-wrap -mx-1 lg:-mx-0">
           <div className="container mx-auto lg:px-0 sm:px-4">
             <div className="py-2">
