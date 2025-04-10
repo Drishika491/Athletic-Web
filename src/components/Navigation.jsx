@@ -27,6 +27,7 @@ function Navigation() {
 
   const fetchMenu = async () => {
     const result = await getMenu();
+    console.log('result', result.data.data);
     const transformData = result.data.data
       .filter(menu => menu.isActive) // Filter out inactive items
       .map(menu => {
@@ -344,7 +345,7 @@ function Navigation() {
                                   const displayItem = item === "Corporate Sponsors" ? "Corporate Partners" : item;
                                   const selectedMenu = menu.find((m) => m.name === hoverValue);
                                   const subMenu = selectedMenu && selectedMenu.publicSubMenus.find((subMenu) => subMenu.name === item);
-
+                                 console.log('displayItem', displayItem);
                                   return (
                                     <li key={item} className="list-none bg-white hover:bg-gray-200 border-b-2 py-2 px-4 whitespace-no-wrap">
                                       {subMenu && subMenu.actionType === "link" ? (

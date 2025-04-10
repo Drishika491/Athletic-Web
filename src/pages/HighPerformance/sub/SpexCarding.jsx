@@ -8,12 +8,28 @@ function SpexCarding() {
   const [spexCarding, setspexCarding] = useState([]);
   const [htmlString, setHtmlString] = useState('');
 
+  // const fetchspexCarding = async () => {
+  //   const result = await getSpexCarding()
+  //   // console.log(result.data.data)
+  //   setspexCarding(result.data.data)
+  //   setHtmlString(result.data.data.content);
+  // }
   const fetchspexCarding = async () => {
-    const result = await getSpexCarding()
-    // console.log(result.data.data)
-    setspexCarding(result.data.data)
-    setHtmlString(result.data.data.content);
-  }
+    const result = await getSpexCarding();
+    let content = result.data.data.content;
+    //  Trim everything BEFORE the first <table>
+    const tableStart = content.toLowerCase().indexOf('<table');
+    if (tableStart !== -1) {
+      content = content.substring(tableStart);
+    }
+    // Trim everything AFTER "FAQ"
+    const faqIndex = content.toLowerCase().indexOf('faq');
+    if (faqIndex !== -1) {
+      content = content.substring(0, faqIndex);
+    }
+    setspexCarding(result.data.data);
+    setHtmlString(content);
+  };
 
   useEffect(() => {
     fetchspexCarding()
@@ -38,8 +54,9 @@ function SpexCarding() {
         )}
 
         <div className='max-w-[1240px] mx-auto'>
-          <div className='p-5 xl:p-0 mt-5 mb-5 text-[1rem]'>
-            <div dangerouslySetInnerHTML={{__html: htmlString}} />
+        <div className='p-5 xl:p-0 mt-5 mb-5 text-[1rem] '>
+            {/* <div dangerouslySetInnerHTML={{__html: htmlString}} /> */}
+            <div className="rendered-html" dangerouslySetInnerHTML={{ __html: htmlString }} />
           </div>
         </div>
       </div>

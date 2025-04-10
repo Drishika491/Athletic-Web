@@ -22,6 +22,9 @@ ol {
   list-style-type: decimal;
   padding: revert;
 }
+.rendered-html table {
+  background-color: white !important;
+}
 
 input[type="date"]
 {
