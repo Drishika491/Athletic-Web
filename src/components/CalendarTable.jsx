@@ -84,14 +84,7 @@ function CalendarTable() {
     fetchData();
   }, [dateFrom, dateTo, eventType, eventHeldStatus, searchKey, currentPage , imageCoverUrl]);
 
-  
-  // const handleDateFromChange = (selectedDate) => {
-  //   setDateFrom(selectedDate);
-  // };
-  
-  // const handleDateToChange = (selectedDate) => {
-  //   setDateTo(selectedDate);
-  // };
+
   const handleMonthChange = (date) => {
     setSelectedMonth(date);
   
@@ -102,9 +95,6 @@ function CalendarTable() {
       // Assuming you had logic earlier that used dateFrom and dateTo
       setDateFrom(startOfMonth);
       setDateTo(endOfMonth);
-  
-      // If you are filtering events based on dateFrom and dateTo,
-      // your existing logic will still work.
     }
   };
   
@@ -199,33 +189,9 @@ function CalendarTable() {
                      {moment(selectedMonth).format('MMMM YYYY')}
                      </div>
                     )}  
+                   </div>  
 
-                </div>
-                
-                {/* <div className="lg:px-4 pb-2">
-                  <DatePicker
-                    selected={dateFrom}
-                    placeholderText='Start Date'
-                    onChange={handleDateFromChange}
-                    showYearDropdown
-                    scrollableYearDropdown
-                    yearDropdownItemNumber={10}
-                    showMonthDropdown
-                    className="block bg-gray-100 rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
-                <div className="px-4 pb-2">
-                  <DatePicker
-                    selected={dateTo}
-                    placeholderText='End Date'
-                    onChange={handleDateToChange}
-                    showYearDropdown
-                    scrollableYearDropdown
-                    yearDropdownItemNumber={10}
-                    showMonthDropdown
-                    className="block bg-gray-100 rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div> */}
+               
               </div>
               <div className="flex">
                 <h2 className="lg:pl-12 mt-1 text-secondary text-[1rem] md:text-[1.3rem] lg:text-[1.3rem]">Type</h2>
@@ -236,12 +202,7 @@ function CalendarTable() {
                     onChange={(e) => setEventType(e.target.value)}
                     className="appearance-none bg-gray-100 rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   >
-                    {/* <option value="">All</option>
-                    <option value="1">Local Competitions</option>
-                    <option value="2">Overseas Competitions</option>
-                    <option value="3">Courses</option>
-                    <option value="4">Workshops</option> */}
-                        <option value="">All</option>
+                    <option value="">All</option>
                     <option value="1">Club/Local Event</option>
                     <option value="2">Overseas Event</option>
                     <option value="3">SA Event</option>
@@ -280,33 +241,32 @@ function CalendarTable() {
               <div className="-mx-4 sm:-mx-8 px-4 md:px-0 lg:px-8 py-4 overflow-x-auto">
                 <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
                   <table className="min-w-full leading-normal">
-                    {}
+                   
                     <tbody>
-  {events.length > 0 ? (
-    events.map((listItem) => (
-      <tr key={listItem.pvid}>
-        {console.log('listItem.name', listItem.eventHeldStatus.name, listItem.imageCoverUrl)}
-        {}
-       
-        <div className="border-4 border-secondary rounded-md p-4 shadow-sm mb-4 bg-gray-100"  >
-          <div className="flex flex-col md:flex-row items-start gap-4">
+                    {events.length > 0 ? (
+                    events.map((listItem) => (
+                    <tr key={listItem.pvid}>
+                    {console.log('listItem.name', listItem.eventHeldStatus.name, listItem.imageCoverUrl)}
     
-            {/* Event Image / Logo */}
-            <div className="md:w-1/5 w-full h-full">
-            <Link to={`/events-&-competitions/calendar/${listItem.articleKey}`}>
-            <img
-            src={
-            listItem.imageCoverUrl
-            ? BASE_URL_ + listItem.imageCoverUrl
-            : BASE_URL_ + "/api/Image/X-12CB-6957a13d5fd349dcb71bccc1bed786b9.png"
-            }
-            alt="Event"
-            className="w-full h-[200px] object-cover rounded-md"
-            onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = "/images/event-placeholder.png";
-            }}
-            />
+                  <div className="border-4 border-secondary rounded-md p-4 shadow-sm mb-4 bg-gray-100"  >
+                    <div className="flex flex-col md:flex-row items-start gap-4">
+              
+                      {/* Event Image / Logo */}
+                      <div className="md:w-1/5 w-full h-full">
+                      <Link to={`/events-&-competitions/calendar/${listItem.articleKey}`}>
+                      <img
+                      src={
+                      listItem.imageCoverUrl
+                      ? BASE_URL_ + listItem.imageCoverUrl
+                      : BASE_URL_ + "/api/Image/X-12CB-6957a13d5fd349dcb71bccc1bed786b9.png"
+                      }
+                      alt="Event"
+                      className="w-full h-[200px] object-cover rounded-md"
+                      onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/images/event-placeholder.png";
+                      }}
+                      />
 
         </Link>
     </div>
@@ -369,20 +329,6 @@ function CalendarTable() {
       To be eligible to represent Team Singapore at this event, athletes must be officially nominated as part of the SA Overseas Athletics Circuit (OAC) or Training & Development Circuit (TDC).
       </p>
     </div>
-
-    {/* Right Badges and Actions */}
-    {/* <div className="flex flex-col items-end justify-between gap-2"> */}
-      {/* Status Badge */}
-     {/* </div> <span className={`px-3 py-1 text-xs rounded-full font-semibold ${
-        listItem.eventHeldStatus?.name === 'Coming Soon' ? 'bg-gray-200 text-gray-700' :
-        listItem.eventHeldStatus?.name === 'Register' ? 'bg-blue-100 text-blue-700' :
-        listItem.eventHeldStatus?.name === 'Result' ? 'bg-green-100 text-green-700' :
-        listItem.eventHeldStatus?.name === 'Cancelled' ? 'bg-red-100 text-red-700' :
-        'bg-yellow-100 text-yellow-700'
-      }`}>
-        {listItem.eventHeldStatus?.name || 'N/A'}
-      </span> */}
-
       <div className="flex flex-col items-end justify-between gap-2 h-full">
                                   {/* Status Badge */}
                                   <span className={`px-2 py-1 text-sm font-semibold
@@ -393,14 +339,7 @@ function CalendarTable() {
     'text-yellow-700 '}`}>
       {listItem.eventHeldStatus?.name || 'N/A'}
       </span>
-
-
-      {/* Category */}
-      {/* <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-        {listItem.eventType?.name || 'Event'}
-      </span> */}
-
-      <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
+  <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
   {listItem.name === 'Local Competitions'
     ? 'Club/Local Event'
     : listItem.name === 'Overseas Competitions'
@@ -416,14 +355,6 @@ function CalendarTable() {
 
       {/* Action Button */}
       {listItem.eventHeldStatus?.name === 'Result' && listItem.resultFileUrl ? (
-        // <a
-        //   href={`${BASE_URL_}${listItem.resultFileUrl}`}
-        //   target="_blank"
-        //   rel="noopener noreferrer"
-        //   className="text-sm border border-primary px-4 py-1 rounded hover:bg-primary hover:text-white"
-        // >
-        //   View Result
-        // </a>
         <Link
   to={`/events-&-competitions/calendar/${listItem.articleKey}`}
   className="text-sm border border-primary px-4 py-1 rounded hover:bg-primary hover:text-white"
@@ -469,13 +400,7 @@ function CalendarTable() {
                 {/* Pagination buttons */}
                 {totalPages > 1 && (
                   <div className="pagination flex gap-4">
-                    {/* <button
-                      disabled={currentPage === 1 || loading}
-                      onClick={handleFirstPage}
-                      className="bg-primary text-white px-4 py-2 rounded-md"
-                    >
-                      &laquo;
-                    </button> */}
+                  
                     <button
                       disabled={currentPage === 1 || loading}
                       onClick={handlePreviousPage}
@@ -522,13 +447,7 @@ function CalendarTable() {
                     >
                       Next
                     </button>
-                    {/* <button
-                      disabled={currentPage === totalPages || loading}
-                      onClick={handleLastPage}
-                      className="bg-primary text-white px-4 py-2 rounded-md"
-                    >
-                      &raquo;
-                    </button> */}
+                    
                   </div>
                 )}
               </div>
