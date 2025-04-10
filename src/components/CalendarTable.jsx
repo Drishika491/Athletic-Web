@@ -7,6 +7,7 @@ import { Icon } from '@iconify/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { getUserPvid } from '../utils/auth';
+import { MapPin } from "lucide-react";
 import { BASE_URL, BASE_URL_ } from '../service/config';
 function CalendarTable() {
   const [events, setEvents] = useState([]);
@@ -20,11 +21,14 @@ function CalendarTable() {
   const [searchKey, setSearchKey] = useState('');
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 3;
   const [displayedData, setDisplayedData] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [userProfile, setUserProfile] = useState([]);
   const userPvid = getUserPvid(); // Get the user's Pvid
+  const [selectedMonth, setSelectedMonth] = useState(null);
+ 
+
 
   const fetchUserProfile = async () => {
     if (!userPvid) return;
@@ -80,12 +84,28 @@ function CalendarTable() {
     fetchData();
   }, [dateFrom, dateTo, eventType, eventHeldStatus, searchKey, currentPage , imageCoverUrl]);
 
-  const handleDateFromChange = (selectedDate) => {
-    setDateFrom(selectedDate);
-  };
   
-  const handleDateToChange = (selectedDate) => {
-    setDateTo(selectedDate);
+  // const handleDateFromChange = (selectedDate) => {
+  //   setDateFrom(selectedDate);
+  // };
+  
+  // const handleDateToChange = (selectedDate) => {
+  //   setDateTo(selectedDate);
+  // };
+  const handleMonthChange = (date) => {
+    setSelectedMonth(date);
+  
+    if (date) {
+      const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+      const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  
+      // Assuming you had logic earlier that used dateFrom and dateTo
+      setDateFrom(startOfMonth);
+      setDateTo(endOfMonth);
+  
+      // If you are filtering events based on dateFrom and dateTo,
+      // your existing logic will still work.
+    }
   };
   
 
@@ -97,6 +117,7 @@ function CalendarTable() {
     setSearchKey('');
     setCurrentPage(1);
     setImageCoverUrl('');
+    setSelectedMonth('');
   };
 
   useEffect(() => {
@@ -164,6 +185,19 @@ function CalendarTable() {
               <div className="flex">
                 <h2 className="mt-1 text-secondary lg:block md:block hidden text-[1rem] md:text-[1.3rem] lg:text-[1.3rem]">Filter</h2>
                 <div className="lg:px-4 pb-2">
+                    <DatePicker
+                      selected={selectedMonth}
+                      onChange={handleMonthChange}
+                      dateFormat="MM/yyyy"
+                      showMonthYearPicker
+                      showFullMonthYearPicker
+                      placeholderText="Select Month & Year"
+                      className="block bg-gray-100 rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    />
+
+                </div>
+                
+                {/* <div className="lg:px-4 pb-2">
                   <DatePicker
                     selected={dateFrom}
                     placeholderText='Start Date'
@@ -186,7 +220,7 @@ function CalendarTable() {
                     showMonthDropdown
                     className="block bg-gray-100 rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
-                </div>
+                </div> */}
               </div>
               <div className="flex">
                 <h2 className="lg:pl-12 mt-1 text-secondary text-[1rem] md:text-[1.3rem] lg:text-[1.3rem]">Type</h2>
@@ -197,11 +231,18 @@ function CalendarTable() {
                     onChange={(e) => setEventType(e.target.value)}
                     className="appearance-none bg-gray-100 rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   >
-                    <option value="">All</option>
+                    {/* <option value="">All</option>
                     <option value="1">Local Competitions</option>
                     <option value="2">Overseas Competitions</option>
                     <option value="3">Courses</option>
-                    <option value="4">Workshops</option>
+                    <option value="4">Workshops</option> */}
+                        <option value="">All</option>
+                    <option value="1">Club/Local Event</option>
+                    <option value="2">Overseas Event</option>
+                    <option value="3">SA Event</option>
+                    
+                   
+
                   </select>
                 </div>
               </div>
@@ -236,92 +277,15 @@ function CalendarTable() {
               <div className="-mx-4 sm:-mx-8 px-4 md:px-0 lg:px-8 py-4 overflow-x-auto">
                 <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
                   <table className="min-w-full leading-normal">
-                    {/* <thead>
-                      <tr>
-                        <th className="px-5 py-3 border-b-2 border-r-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Date</th>
-                        <th className="px-5 py-3 border-b-2 border-r-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Event</th>
-                        <th className="px-5 py-3 border-b-2 border-r-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Type</th>
-                        <th className="px-5 py-3 border-b-2 border-r-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Event Status</th>
-                        <th className="px-5 py-3 border-b-2 border-gray-200 bg-primary text-left text-xs font-semibold text-white uppercase tracking-wider">Venue</th>
-                      </tr>
-                    </thead> */}
+                    {}
                     <tbody>
   {events.length > 0 ? (
     events.map((listItem) => (
       <tr key={listItem.pvid}>
         {console.log('listItem.name', listItem.eventHeldStatus.name, listItem.imageCoverUrl)}
-        {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          <div className="flex">
-            <div className="">
-              {moment(listItem.date).format('MMM YYYY') === moment(listItem.endDate).format('MMM YYYY') ? (
-                <p className="whitespace-no-wrap">{moment(listItem.date).format('DD')} - {moment(listItem.endDate).format('DD MMM YYYY')}</p>
-              ) : (
-                <p className="whitespace-no-wrap">{moment(listItem.date).format('DD MMM YYYY')} - {moment(listItem.endDate).format('DD MMM YYYY')}</p>
-              )}
-            </div>
-          </div>
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          {listItem.articleKey ? (
-            <Link to={`/events-&-competitions/calendar/${listItem.articleKey}`}>
-              {listItem.name ? (
-                <p className="text-gray-900 whitespace-no-wrap">{listItem.name}</p>
-              ) : (
-                <p className="text-gray-900 whitespace-no-wrap">Not Available</p>
-              )}
-            </Link>
-          ) : (
-            <p className="text-gray-900 whitespace-no-wrap">{listItem.name || 'Not Available'}</p>
-          )}
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          {listItem.eventType && listItem.eventType.name ? (
-            <p className="text-gray-900 whitespace-no-wrap">{listItem.eventType.name}</p>
-          ) : (
-            <p className="text-gray-900 whitespace-no-wrap">Not Available</p>
-          )}
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          {listItem.eventHeldStatus && listItem.eventHeldStatus.name ? (
-            <p
-              className={`whitespace-no-wrap ${
-                listItem.eventHeldStatus.name === 'Coming Soon'
-                  ? 'text-green-400'
-                  : listItem.eventHeldStatus.name === 'Register'
-                  ? 'text-[#687bbb]'
-                  : listItem.eventHeldStatus.name === 'Result'
-                  ? 'text-red-400'
-                  : ''
-              }`}
-            >
-              {listItem.eventHeldStatus.name === 'Result' && listItem.resultFileUrl !== null ? (
-                <a href={BASE_URL_ + `${listItem.resultFileUrl}`} target="_blank" rel="noopener noreferrer">
-                  {listItem.eventHeldStatus.name}
-                </a>
-              ) : listItem.eventHeldStatus.name === 'Register' && userProfile.userType === 'Club' ? (
-                <Link to={`/account/events`}>{listItem.eventHeldStatus.name}</Link>
-              ) : listItem.eventHeldStatus.name === 'Register' ? (
-                <Link to={`/event-register/${listItem.pvid}`}>{listItem.eventHeldStatus.name}</Link>
-              ) : listItem.eventHeldStatus.name === 'Cancel ' ? (
-                'Cancelled'
-              ) : listItem.eventHeldStatus.name === 'Postpone' ? (
-                'Postponed'
-              ) : (
-                listItem.eventHeldStatus.name
-              )}
-            </p>
-          ) : (
-            <p className="text-gray-900 whitespace-no-wrap">Not Available</p>
-          )}
-        </td>
-        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-          {listItem.venue ? (
-            <p className="text-gray-900 whitespace-no-wrap">{listItem.venue}</p>
-          ) : (
-            <p className="text-gray-900 whitespace-no-wrap">Not Available</p>
-          )}
-        </td> */}
-        <div className="border border-gray-300 rounded-md p-4 bg-white shadow-sm mb-4">
+        {}
+       
+        <div className="border-4 border-secondary rounded-md p-4 shadow-sm mb-4 bg-gray-100"  >
           <div className="flex flex-col md:flex-row items-start gap-4">
     
             {/* Event Image / Logo */}
@@ -361,7 +325,9 @@ function CalendarTable() {
   </div>
 
   {/* Line */}
-  <div className="h-px bg-gray-400 flex-1"></div>
+  <div className="mx-15 ">
+      <div className="w-20 h-0.5 border-t-2 border-dotted border-gray-700"></div>
+        </div>
 
   {/* End Date Calendar */}
   <div className="w-14 border rounded-md overflow-hidden shadow-sm">
@@ -378,7 +344,7 @@ function CalendarTable() {
 
 
       {/* Event Name */}
-      <h3 className="text-lg font-bold text-gray-800">
+      <h3 className="text-lg font-bold text-gray-800 mb-1">
         {listItem.articleKey ? (
           <Link to={`/events-&-competitions/calendar/${listItem.articleKey}`}>
             {listItem.name || 'Not Available'}
@@ -389,20 +355,22 @@ function CalendarTable() {
       </h3>
 
       {/* Venue */}
-      <p className="text-sm text-gray-600 mt-1">
-        📍 {listItem.venue || 'Not Available'}
+      <p className="text-gray-600 text-sm flex items-center">
+            <MapPin className="h-5 w-5 text-secondary mt-0.5 mr-1" />
+            {listItem.venue}
       </p>
 
       {/* Description */}
       <p className="text-sm text-gray-700 mt-2">
-        This is a ratified competition. In order to represent Team Singapore, athletes have to be a nominated part of the SA OAC/TDC...
+      This is a ratified competition under Singapore Athletics.
+      To be eligible to represent Team Singapore at this event, athletes must be officially nominated as part of the SA Overseas Athletics Circuit (OAC) or Training & Development Circuit (TDC).
       </p>
     </div>
 
     {/* Right Badges and Actions */}
-    <div className="flex flex-col items-end justify-between gap-2">
+    {/* <div className="flex flex-col items-end justify-between gap-2"> */}
       {/* Status Badge */}
-      <span className={`px-3 py-1 text-xs rounded-full font-semibold ${
+     {/* </div> <span className={`px-3 py-1 text-xs rounded-full font-semibold ${
         listItem.eventHeldStatus?.name === 'Coming Soon' ? 'bg-gray-200 text-gray-700' :
         listItem.eventHeldStatus?.name === 'Register' ? 'bg-blue-100 text-blue-700' :
         listItem.eventHeldStatus?.name === 'Result' ? 'bg-green-100 text-green-700' :
@@ -410,12 +378,38 @@ function CalendarTable() {
         'bg-yellow-100 text-yellow-700'
       }`}>
         {listItem.eventHeldStatus?.name || 'N/A'}
+      </span> */}
+
+      <div className="flex flex-col items-end justify-between gap-2 h-full">
+                                  {/* Status Badge */}
+                                  <span className={`px-2 py-1 text-sm font-semibold
+  ${listItem.eventHeldStatus?.name === 'Coming Soon' ? 'text-gray-700 ' :
+    listItem.eventHeldStatus?.name === 'Register' ? 'text-blue-700 ' :
+    listItem.eventHeldStatus?.name === 'Result' ? 'text-green-700 ' :
+    listItem.eventHeldStatus?.name === 'Cancelled' ? 'text-red-700 ' :
+    'text-yellow-700 '}`}>
+      {listItem.eventHeldStatus?.name || 'N/A'}
       </span>
 
+
       {/* Category */}
-      <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+      {/* <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
         {listItem.eventType?.name || 'Event'}
-      </span>
+      </span> */}
+
+      <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
+  {listItem.name === 'Local Competitions'
+    ? 'Club/Local Event'
+    : listItem.name === 'Overseas Competitions'
+      ? 'Overseas Event'
+      : listItem.name === 'Courses'
+        ? 'SA Event'
+        : listItem.name === 'Workshops'
+          ? 'SA Event'
+          : listItem.eventType?.name || 'Event'}
+</span>
+                                  <br></br>
+                                  <br></br>
 
       {/* Action Button */}
       {listItem.eventHeldStatus?.name === 'Result' && listItem.resultFileUrl ? (
